@@ -148,61 +148,6 @@ class Characters:
             skillskillet2 = random.randint(0, 2)
             skillskillet3 = random.randint(0, 2)
             if self._speed >= enemy.get_speed():
-                if self._party >= 1 and self._party != 4:
-                    if self._partyskills1[skillskillet] == "range mode" and self._partymp>=10:
-                        print("[Shelly] ranged mode")
-                        enemy.damage(self._attack+20 , self._hitratio)
-                        enemy.damage(self._attack, self._hitratio+10)
-                        enemy.damage(self._attack-10, self._hitratio+20)
-                        self._partymp -= 10
-                    elif self._partyskills1[skillskillet] == "full blast" and self._partymp>=10:
-                        print("[Shelly] full blast")
-                        enemy.damage(self._attack*self._hitratio, 9223372036854775807)
-                        self._partymp -= 10
-                    elif self._partyskills1[skillskillet] == "self strike" and self._health>=self._speed+enemy.get_attack():
-                        print("[Shelly] self strike")
-                        self._health -= self._speed
-                        self._partymp += 30
-                        self._magic += 20
-                    else:
-                        print("[Shelly] attack")
-                        enemy.damage(self._attack, self._hitratio)
-                if self._party >= 2:
-                    if self._partyskills2[skillskillet2] == "regen wave" and self._partymp>=5:
-                        print("[Drake] regen wave")
-                        self._health += 40
-                        self._partymp -= 5
-                    elif self._partyskills2[skillskillet2] == "artist block" and self._partymp>=5:
-                        print("[Drake] artist block")
-                        self._speed += 1
-                        self._hitratio += 2
-                        self._partymp -= 5
-                    elif self._partyskills2[skillskillet2] == "call of the dead" and self._partymp>=5:
-                        print("[Drake] call of the dead")
-                        self._hitratio += 4
-                        enemy.damage(self._attack, self._hitratio)
-                        self._partymp -= 5
-                    else:
-                        print("[Drake] attack")
-                        enemy.damage(self._attack, self._hitratio)
-                if self._party >= 3:
-                    if self._partyskills3[skillskillet3] == "sprint" and self._partymp>=10:
-                        print("[Neo] sprint")
-                        self._speed += 2
-                        self._partymp -= 10
-                    elif self._partyskills3[skillskillet3] == "sharpen" and self._partymp>=5:
-                        print("[Neo] sharpen")
-                        self._attack += 3
-                        self._hitratio += 1
-                        self._partymp -= 5
-                    elif self._partyskills3[skillskillet3] == "blitz" and self._partymp>=5:
-                        print("[Neo] blitz")
-                        self._attack += 2
-                        enemy.damage(self._attack, self._hitratio)
-                        self._partymp -= 5
-                    else:
-                        print("[Neo] attack")
-                        enemy.damage(self._attack, self._hitratio)
                 time.sleep(0.9)
                 print("["+self._name+"]", "HP:", self._health, "MP:", self._magic, "skill:", self._skillist[skillet])
                 if enemy.get_health() >= 0:
@@ -236,48 +181,6 @@ class Characters:
                             self._magic -= 2
                         else:
                             self._health -= 4
-                    if self._skillist[skillet] == "Ahoy!":
-                        self._attack += 3
-                        self._defence -= 1
-                        self._health += self._magic
-                        if self._defence < 1:
-                            self._defence = 1
-                        if self._health >self._maxhealth:
-                            self._health = self._maxhealth
-                    elif self._skillist[skillet] == "Cannon Fire":
-                        self._attack += 10
-                        enemy.damage(self._attack, self._hitratio*10)
-                    elif self._skillist[skillet] == "Pain Killer":
-                        self._attack -= 1
-                        self._health += 10
-                        if self._attack < 1:
-                            self._attack = 1
-                    elif self._skillist[skillet] == "Charge Strike":
-                        self._attack += 5
-                        self._hitratio += 5
-                    elif self._skillist[skillet] == "Revol Shot":
-                        self._attack += 10
-                        enemy.damage(self._attack, self._hitratio)
-                        self._attack -= 10
-                    elif self._skillist[skillet] == "Big Bang Punch":
-                        self._partymp += 20
-                        self._magic += 10
-                        enemy.damage(self._attack*5, self._hitratio*10)
-                    elif self._skillist[skillet] == "Revolt Beam":
-                        self._speed = 1
-                        enemy.damage(self._attack, 999999)
-                        enemy.damage(self._attack, 999999)
-                        enemy.damage(self._attack, 999999)
-                    elif self._skillist[skillet] == "Rebel Wishes":
-                        self._attack += 5
-                        self._speed -= 2
-                        self._health += self._magic + self._attack
-                        if self._health >self._maxhealth:
-                            self._health = self._maxhealth
-                    elif self._skillist[skillet] == "Soul Liberate":
-                        self._attack += 10
-                        self._hitratio += 10
-                        self._partymp += 10
                 elif action == "4":
                     print("[???] you are a silly fool")
                     time.sleep(0.9)
@@ -300,66 +203,6 @@ class Characters:
                         self._health-=enemy.get_attack()
                     else:
                         print("Miss")
-                elif enemy.get_skills()[enemyskillet] == "Slow":
-                    print("[Enemy]: Slow")
-                    self._speed -= 2
-                elif enemy.get_skills()[enemyskillet] == "Aura Force":
-                    print("[Enemy]: Aura Force")
-                    print("<enemy gains health>")
-                    enemy.damage(-3, 999999)
-                elif enemy.get_skills()[enemyskillet] == "God Scape":
-                    print("[Enemy]: God Scape")
-                    print("<the ground distorts bellow you>")
-                    self._defence = 1
-                    if self._magic > 10:
-                        self._magic -= 10
-                    else:
-                        self._health -= 5
-                elif enemy.get_skills()[enemyskillet] == "Starscrapper":
-                    print("[Enemy]: Starscrapper")
-                    print("<time seems to speed up>")
-                    self._defence = 1
-                    self._hitratio = 1
-                    enemy.damage(self._attack*-1, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Purify":
-                    print("[Enemy]: Attack")
-                    print("<your stats reset>")
-                    roll = random.randint(0, enemy.get_hitratio())
-                    if roll>self._defence:
-                        print("Hit")
-                        self._health-=enemy.get_attack()
-                    else:
-                        print("Miss")
-                    self._defence = self._ogdefence
-                    self._hitratio = self._oghitratio
-                elif enemy.get_skills()[enemyskillet] == "Time Roar":
-                    print("[Enemy]: Time Roar")
-                    self._health -= 20
-                    enemy.damage(-20, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Time Roar2":
-                    print("[Enemy]: #%&$#$^%")
-                    self._health -= 777
-                    enemy.damage(-777, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Vamp Bite":
-                    print("[Enemy]: Bite")
-                    self._health -= 25
-                    enemy.damage(-50, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Wrap":
-                    print("[Enemy]: Wrap")
-                    self._health -= 5
-                    enemy.damage(-10, 999999)
-                    self._magic -= 5
-                    self._speed -= 1
-                    if self._magic < 0:
-                        self._magic = 0
-                elif enemy.get_skills()[enemyskillet] == "Tears":
-                    print("[Enemy]: Heavy Tears")
-                    self._health -= 5
-                    self._attack -= 1
-                    self._speed -= 1
-                    if self._attack <= 1:
-                        self._attack = 2
-                time.sleep(0.9)
             if self._speed < enemy.get_speed() and enemy.get_health() > 0 and self._health > 0:
                 if enemy.get_skills()[enemyskillet] == "void":
                     print("[Enemy]: Attack")
@@ -369,64 +212,6 @@ class Characters:
                         self._health-=enemy.get_attack()
                     else:
                         print("Miss")
-                elif enemy.get_skills()[enemyskillet] == "Slow":
-                    print("[Enemy]: Slow")
-                    self._speed -= 1
-                elif enemy.get_skills()[enemyskillet] == "Aura Force":
-                    print("[Enemy]: Aura Force")
-                    print("<enemy gains health>")
-                    enemy.damage(-3, 999999)
-                elif enemy.get_skills()[enemyskillet] == "God Scape":
-                    print("[Enemy]: God Scape")
-                    print("<the ground distorts bellow you>")
-                    self._defence = 1
-                    if self._magic > 10:
-                        self._magic -= 10
-                    else:
-                        self._health -= 5
-                elif enemy.get_skills()[enemyskillet] == "Starscrapper":
-                    print("[Enemy]: Starscrapper")
-                    print("<time seems to speed up>")
-                    self._defence = 1
-                    self._hitratio = 1
-                    enemy.damage(self._attack*-1, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Purify":
-                    print("[Enemy]: Attack")
-                    print("<your stats reset>")
-                    roll = random.randint(0, enemy.get_hitratio())
-                    if roll>self._defence:
-                        print("Hit")
-                        self._health-=enemy.get_attack()
-                    else:
-                        print("Miss")
-                    self._defence = self._ogdefence
-                    self._hitratio = self._oghitratio
-                elif enemy.get_skills()[enemyskillet] == "Time Roar":
-                    print("[Enemy]: Time Roar")
-                    self._health -= 20
-                    enemy.damage(-20, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Wrap":
-                    print("[Enemy]: Wrap")
-                    self._health -= 10
-                    enemy.damage(-10, 999999)
-                    self._magic -= 10
-                    if self._magic < 0:
-                        self._magic = 0
-                elif enemy.get_skills()[enemyskillet] == "Time Roar2":
-                    print("[Enemy]: #%&$#$^%")
-                    self._health -= 777
-                    enemy.damage(-777, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Vamp Bite":
-                    print("[Enemy]: Bite")
-                    self._health -= 25
-                    enemy.damage(-50, 999999)
-                elif enemy.get_skills()[enemyskillet] == "Tears":
-                    print("[Enemy]: Heavy Tears")
-                    self._health -= 1
-                    self._defence -= 1
-                    self._speed += 3
-                    if self._defence <= 0:
-                        self._defence = 1
                 time.sleep(0.9)
                 print("["+self._name+"]", "HP:", self._health, "MP:", self._magic, "skill:", self._skillist[skillet])
                 if enemy.get_health() >= 0:
@@ -460,129 +245,18 @@ class Characters:
                             self._magic -= 2
                         else:
                             self._health -= 4
-                    if self._skillist[skillet] == "Ahoy!":
-                        self._attack += 3
-                        self._defence -= 1
-                        self._health += self._magic
-                        if self._defence < 1:
-                            self._defence = 1
-                        if self._health >self._maxhealth:
-                            self._health = self._maxhealth
-                    elif self._skillist[skillet] == "Cannon Fire":
-                        self._attack += 5
-                        enemy.damage(self._attack, self._hitratio*5)
-                    elif self._skillist[skillet] == "Pain Killer":
-                        self._attack -= 2
-                        self._speed += 1
-                        self._health += 10
-                        if self._attack < 1:
-                            self._attack = 1
-                    elif self._skillist[skillet] == "Charge Strike":
-                        self._attack += 5
-                        self._speed += 2
-                    elif self._skillist[skillet] == "Revol Shot":
-                        self._attack += 10
-                        enemy.damage(self._attack, self._hitratio)
-                        self._attack -= 10
-                    elif self._skillist[skillet] == "Big Bang Punch":
-                        self._partymp += 10
-                        self._magic += 5
-                        self._speed += 2
-                        enemy.damage(self._attack, self._hitratio*5)
-                    elif self._skillist[skillet] == "Revolt Beam":
-                        self._speed += 20
-                        self._attack += 5
-                        self._hitratio += 5
-                        self._defence += 1
-                    elif self._skillist[skillet] == "Rebel Wishes":
-                        self._attack += 2
-                        self._speed += 3
-                        self._health += self._attack
-                        if self._health >self._maxhealth:
-                            self._health = self._maxhealth
-                    elif self._skillist[skillet] == "Soul Liberate":
-                        self._attack += 5
-                        self._hitratio += 5
-                        self._speed += 2
-                if self._party >= 1 and self._party != 4:
-                    if self._partyskills1[skillskillet] == "range mode" and self._partymp>=10:
-                        print("[Shelly] ranged mode")
-                        enemy.damage(self._attack+10 , self._hitratio-10)
-                        enemy.damage(self._attack, self._hitratio-10)
-                        enemy.damage(self._attack-10, self._hitratio-10)
-                        self._partymp -= 10
-                    elif self._partyskills1[skillskillet] == "full blast" and self._partymp>=10:
-                        print("[Shelly] full blast")
-                        enemy.damage(self._attack*self._speed, 9223372036854775807)
-                        self._speed += 1
-                        self._partymp -= 10
-                    elif self._partyskills1[skillskillet] == "self strike" and self._health>=self._speed+enemy.get_attack():
-                        print("[Shelly] self strike")
-                        self._health -= self._speed
-                        self._partymp += 15
-                        self._magic += 15
-                    else:
-                        print("[Shelly] attack")
-                        enemy.damage(self._attack, self._hitratio)
-                if self._party >= 2:
-                    if self._partyskills2[skillskillet2] == "regen wave" and self._partymp>=10:
-                        print("[Drake] regen wave")
-                        self._health += 30
-                        self._partymp -= 10
-                    elif self._partyskills2[skillskillet2] == "artist block" and self._partymp>=5:
-                        print("[Drake] artist block")
-                        self._speed += 3
-                        self._partymp -= 5
-                    elif self._partyskills2[skillskillet2] == "call of the dead" and self._partymp>=5:
-                        print("[Drake] call of the dead")
-                        self._hitratio += 1
-                        self._speed += 1
-                        enemy.damage(self._attack, self._hitratio)
-                        self._partymp -= 5
-                    else:
-                        print("[Drake] attack")
-                        enemy.damage(self._attack, self._hitratio)
-                if self._party >= 3:
-                    if self._partyskills3[skillskillet3] == "sprint" and self._partymp>=5:
-                        print("[Neo] sprint")
-                        self._speed += 3
-                        self._partymp -= 5
-                    elif self._partyskills3[skillskillet3] == "sharpen" and self._partymp>=5:
-                        print("[Neo] sharpen")
-                        self._attack += 7
-                        self._partymp -= 5
-                    elif self._partyskills3[skillskillet3] == "blitz" and self._partymp>=5:
-                        print("[Neo] blitz")
-                        self._attack += 5
-                        self._speed += 2
-                        self._partymp -= 5
-                    else:
-                        print("[Neo] attack")
-                        enemy.damage(self._attack, self._hitratio)
                 time.sleep(0.9)
-            if self._party > 0 and self._party != 4 and enemy.get_health() >= enemy.get_magic():
-                roll = random.randint(1, 9-self._party)
-                if roll == 5:
+            if self._party > 0 and enemy.get_health() >= enemy.get_magic():
+                roll = random.randint(1, 8-self._party)
+                if roll == 1:
                     print("[Party]: FULL ASSAULT!")
                     enemy.damage(self._attack*self._party, self._hitratio*self._party)
-                elif roll == 1:
+                elif roll == 2:
                     print("[Party]: Magic Break!")
                     self._partymp += self._party
-                elif roll == 2 and self._party == 1:
+                elif roll == 3:
                     print("[Shelly]: cheering!")
                     self._magic += 3
-            elif self._party == 4:
-                roll = random.randint(1, 5)
-                if roll == 1:
-                    print("[Party]: Party Assault?")
-                    enemy.damage(self._attack, self._hitratio)
-                elif roll == 2:
-                    print("[Party]: Magic Break?")
-                    self._partymp += self._party
-                elif roll == 3:
-                    print("[Shelly]: Shelly's tears")
-                    self._magic += 3
-                    self._partymp += 6
             if self._magic < 0:
                 self._magic = 0
             if self._magic > 9999:
